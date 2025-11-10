@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+            padding: 50px 60px;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: #f1f5f9;
+            margin-bottom: 35px;
+            font-size: 2.25rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(153, 27, 27, 0.5);
+        }
+
+        ul {
+            list-style: none;
+            margin: 0 0 35px 0;
+        }
+
+        ul li {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.7) 100%);
+            padding: 20px 24px;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            border-left: 4px solid #991b1b;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        ul li:hover {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.9) 100%);
+            transform: translateX(8px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            border-left-color: #dc2626;
+        }
+
+        ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 300;
+            display: block;
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        ul li a:hover {
+            color: #fca5a5;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border: none;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(127, 29, 29, 0.3);
+        }
+
+        .back-link:hover {
+            background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(153, 27, 27, 0.4);
+        }
+
+        .back-link:active {
+            transform: translateY(0);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64748b;
+            font-size: 1rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px 30px;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            ul li {
+                padding: 18px 20px;
+            }
+
+            ul li a {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Available Projects</h2>
+        <ul>
+            {% for project in projects %}
+                <li>
+                    <a href="{{ url_for('project_detail', project_id=project.project_id) }}">
+                        {{ project.title }} ({{ project.domain }})
+                    </a>
+                </li>
+            {% else %}
+                <li class="empty-state">No projects available at the moment.</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('dashboard') }}" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

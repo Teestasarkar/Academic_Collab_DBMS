@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: #e2e8f0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #450a0a 0%, #7f1d1d 50%, #991b1b 100%);
+            color: white;
+            padding: 2.5rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header h2 {
+            font-size: 2.25rem;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+            color: white;
+            border: none;
+            padding: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            margin-bottom: 0.35rem;
+            font-weight: 300;
+        }
+
+        .header p strong {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h3 {
+            color: #f1f5f9;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(139, 30, 30, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        h4 {
+            color: #cbd5e1;
+            font-size: 1.125rem;
+            font-weight: 400;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-item strong {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item span {
+            color: #e2e8f0;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .profile-photo-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #991b1b;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(153, 27, 27, 0.4);
+        }
+
+        a {
+            color: #fca5a5;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: #f87171;
+        }
+
+        a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background: #f87171;
+            transition: width 0.3s ease;
+        }
+
+        a:hover::after {
+            width: 100%;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.875rem;
+            margin: 1rem 0;
+        }
+
+        .skill-item {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.7) 100%);
+            padding: 0.875rem 1.125rem;
+            border-radius: 8px;
+            border-left: 3px solid #991b1b;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .skill-item:hover {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.9) 100%);
+            transform: translateX(6px);
+            border-left-color: #dc2626;
+        }
+
+        .projects-list, .publications-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .projects-list li, .publications-list li {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.7) 100%);
+            padding: 1.125rem 1.5rem;
+            margin-bottom: 0.875rem;
+            border-radius: 8px;
+            border-left: 3px solid #991b1b;
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .projects-list li:hover, .publications-list li:hover {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.9) 100%);
+            transform: translateX(6px);
+            border-left-color: #dc2626;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            padding: 1.75rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: rgba(15, 23, 42, 0.8);
+            color: #e2e8f0;
+            font-weight: 300;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #991b1b;
+            box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.2);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+            color: white;
+            padding: 0.875rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(127, 29, 29, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(153, 27, 27, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .nav-footer {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+            padding: 1.75rem;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-footer a {
+            margin: 0 1.5rem;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-footer a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h2>Welcome, {{ user.name }}</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Department:</strong> {{ user.department }}</p>
+        </div>
+    </div>
+
+    <div class="container">
+        {% if profile %}
+            <div class="card">
+                <h3>Profile</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Education</strong>
+                        <span>{{ profile.education }}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Experience</strong>
+                        <span>{{ profile.experience }} years</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Website</strong>
+                        <span><a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>LinkedIn</strong>
+                        <span><a href="{{ profile.linkedin }}" target="_blank">{{ profile.linkedin }}</a></span>
+                    </div>
+                </div>
+                {% if profile.photo %}
+                    <div class="profile-photo-container">
+                        <img src="{{ profile.photo }}" alt="Profile Photo" height="150">
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="card">
+                <div class="empty-state">No profile data found.</div>
+            </div>
+        {% endif %}
+
+        <div class="card">
+            <h3>Skills</h3>
+            <div class="skills-grid">
+                {% if skills %}
+                    {% for skill in skills %}
+                        <div class="skill-item">{{ skill }}</div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">No skills found.</div>
+                {% endif %}
+            </div>
+            
+            <h4>Add Skill</h4>
+            <div class="form-container">
+                <form method="POST" action="{{ url_for('add_skill') }}">
+                    <div class="form-group">
+                        <input type="text" name="skill" placeholder="Enter new skill" required>
+                    </div>
+                    <button type="submit">Add Skill</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Projects</h3>
+            <ul class="projects-list">
+                {% if projects %}
+                    {% for project in projects %}
+                        <li>{{ project.title }} ({{ project.status }})</li>
+                    {% endfor %}
+                {% else %}
+                    <li class="empty-state">No projects found.</li>
+                {% endif %}
+            </ul>
+
+            <h4>Create New Project</h4>
+            <div class="form-container">
+                <form method="POST" action="{{ url_for('add_project') }}">
+                    <div class="form-group">
+                        <input type="text" name="title" placeholder="Project Title" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="domain" placeholder="Project Domain" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="status" required>
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <button type="submit">Add Project</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Publications</h3>
+            <ul class="publications-list">
+                {% if publications %}
+                    {% for pub in publications %}
+                        <li>{{ pub.title }} ({{ pub.year }}) - {{ pub.journal }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li class="empty-state">No publications found.</li>
+                {% endif %}
+            </ul>
+            
+            <h4>Add Publication</h4>
+            <div class="form-container">
+                <form method="POST" action="{{ url_for('add_publication') }}">
+                    <div class="form-group">
+                        <input type="text" name="title" placeholder="Title" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="year" placeholder="Year" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="journal" placeholder="Journal" required>
+                    </div>
+                    <button type="submit">Add Publication</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="{{ url_for('projects') }}">See All Projects</a> |
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
